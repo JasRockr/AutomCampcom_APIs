@@ -1,0 +1,23 @@
+extends ../layout/index
+
+block contenido
+  .py-2
+    h1.text-4xl.my-5.font-extrabold.text-center Campañas 
+      span.font-normal Comerciales
+    h2.text-center.text-2xl.font-extrabold= pagina
+
+    div(class="bg-white shadow py-8 px-4 rounded mx-auto max-w-4xl my-10 md:px-10")
+      form.space-y-8(method="POST" action="/campanias/crear") 
+        div.space-y-5
+          h3.text-lg.leading-6.font-medium.text-gray-900 Información Campaña
+          p.text-gray-400 Información sobre la campaña que desea ejecutar
+
+          div 
+            label.block.text-sm.uppercase.text-gray-700.mb-2(for="campania") Campaña de Cumpleaños
+          
+          div 
+            label.block.text-sm.uppercase.text-gray-700.mb-2(for="regla") Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime veniam odit sunt incidunt fugiat aperiam atque officiis voluptatem, eligendi qui delectus cupiditate blanditiis et esse, pariatur quasi a corporis non!
+
+          div 
+            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="consulta") Datos Consltados
+          
