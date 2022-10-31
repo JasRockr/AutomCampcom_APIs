@@ -2,8 +2,10 @@ import { exit } from 'node:process';
 import categorias from './categorias.js';
 import usuarios from './usuarios.js';
 import roles from './roles.js';
+import clientes from './clientes.js';
+import campanias from './campanias.js';
 import db from '../config/db.js';
-import { Categoria, Usuario, Rol } from '../models/index.js';
+import { Categoria, Usuario, Rol, Cliente, Campania } from '../models/index.js';
 
 const importarDatos = async () => {
     try {
@@ -17,7 +19,9 @@ const importarDatos = async () => {
         await Promise.all ([
             Categoria.bulkCreate(categorias),
             Usuario.bulkCreate(usuarios),
-            Rol.bulkCreate(roles)
+            Rol.bulkCreate(roles),
+            Cliente.bulkCreate(clientes),
+            Campania.bulkCreate(campanias)
         ])
 
         console.log('Datos importados correctamente')

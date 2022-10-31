@@ -1,11 +1,13 @@
 // Import modules
 import express from 'express'; // ES Module
 //! Deprecated dependencies: csurf
-import csrf from 'csurf'
+//import csrf from 'csurf'
 import cookieParser from 'cookie-parser';
 // ------------
 import usuarioRoutes from './routes/usuarioRoutes.js';
 import campaniaRoutes from './routes/campaniaRoutes.js';
+import appRoutes from './routes/appRoutes.js';
+import apiRoutes from './routes/apiRoutes.js';
 import db from './config/db.js';
 
 // Create app
@@ -43,11 +45,13 @@ app.set('views', './views');
 app.use( express.static('public') );
 
 // Set up routes
+app.use('/', appRoutes);
 app.use('/auth', usuarioRoutes);
 app.use('/', campaniaRoutes);
+app.use('/api', apiRoutes);
 
 // Define port number for initialization
-const port = process.env.PORT || 3000; // default
+const port = process.env.PORT || 3000; // default 3000
 app.listen(port, () => {
   console.log(`Servidor activo desde el puerto: ${port}`);
   });

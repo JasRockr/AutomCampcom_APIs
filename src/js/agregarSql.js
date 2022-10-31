@@ -17,7 +17,7 @@ Dropzone.options.consulta = {
         const btnPublicar = document.querySelector('#publicar')
 
         btnPublicar.addEventListener('click', function() {
-            dropzone.processQueue()
+          dropzone.processQueue()
         })
 
         dropzone.on('queuecomplete', function() {

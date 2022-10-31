@@ -1,0 +1,24 @@
+header.bg-green-600.p-4
+    .container.mx-auto.flex.justify-between.items-center
+      a(href="/")
+        h1.text-2xl.text-white.font-extrabold.text-center Campañas 
+          span.font-normal Comerciales
+
+        nav(class="my-4 text-sm md:flex md:items-center md:gap-5 font-bold text-white hidden")
+          a(href="/auth/login") Iniciar Sesión
+
+div(class="bg-green-700 py-5 hidden lg:block")
+  div(class="container mx-auto flex justify-between")
+    nav(class="flex gap-4 items-center")
+      a(href="/categorias/1" class="text-sm font-bold uppercase text-white") Bienvenida
+      a(href="/categorias/2" class="text-sm font-bold uppercase text-white") Renovación
+      a(href="/categorias/3" class="text-sm font-bold uppercase text-white") Cumpleaños
+      a(href="/categorias/4" class="text-sm font-bold uppercase text-white") Retiro
+      a(href="/categorias/5" class="text-sm font-bold uppercase text-white") Encuesta
+      a(href="/categorias/6" class="text-sm font-bold uppercase text-white") Actualización
+
+    form(action="/buscador" method="POST" class="flex gap-2 items-center")
+      label(for="termino" class="text-sm font-bold uppercase text-white") Búsqueda
+      input(type="text" id="termino" name="termino" placeholder="Buscar Campañas" class="p-2 rounded-lg shadow text-sm")
+
+      input(type="submit" class="bg-green-800 hover:bg-green-400 rounded-lg text-white uppercase font-bold p-2 cursor-pointer text-sm" value="Buscar")

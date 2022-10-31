@@ -1,0 +1,17 @@
+
+form.space-y-8(method="POST" action="/campanias/crear") 
+  div(class="px-5 space-y-5")
+
+    p.text-gray-600 Información para el consumo de la campaña que se desea ejecutar
+
+    div 
+      label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="mensaje") Mensaje
+      textarea#mensaje.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Mensaje que recibe el usuario final" spellcheck="true" name="mensaje")
+
+    div 
+      label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="url") Url
+      input#url.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="https://" type="text" name="url" value '')
+  //-
+    div 
+      label(class="block text-sm uppercase text-gray-500 mb-3 font-bold" for="regla") Descripción / Regla de negocio
+      textarea#regla.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Descripción o regla de negocio para definir la campaña" spellcheck="true" name="regla")= datos.regla ? datos.regla : ''
