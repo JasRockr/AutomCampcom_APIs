@@ -1,6 +1,9 @@
+import Swal from 'sweetalert2'
 import { unlink } from 'node:fs/promises';
 import { validationResult } from 'express-validator';
 import { Categoria, Campania } from "../models/index.js";
+
+
 
 // Admin
 const admin = async (req, res) => { 
@@ -300,8 +303,68 @@ const mostrarCampania = async (req, res) => {
   res.render('campanias/mostrar', {
       campaign,
       pagina: campaign.campania,
-      usuario: req.usuario
+      usuario: req.usuario,
+      datos: {}
   })
+}
+
+// SMS message
+const enviarSms = async (req, res, next) => {
+  
+  const { id } = req.params
+  console.log(id)
+
+  // Validation
+  let resultado = validationResult(req)
+  
+  if (!resultado.isEmpty()) {
+
+    const campaign = await Campania.findByPk(id, {
+      include: [
+          { model: Categoria, as: 'Categoria' }
+      ]
+    })
+    
+    return res.render('campanias/mostrar', {
+      campaign,
+      pagina: 'Envío de campaña: ' + campaign.campania,
+      usuario: req.usuario,
+      errores: resultado.array(),
+      datos: req.body
+    })
+  }
+  
+  // Send
+  //const { campania, regla, categoria: categoriaId } = req.body
+
+  //const { id : usuarioId } = req.usuario
+  /*
+  Swal.fire({
+    title: 'Error!',
+    text: 'Do you want to continue',
+    icon: 'error',
+    confirmButtonText: 'Cool'
+  })
+  */
+  console.log(req.body, req.usuario)
+
+  /*
+  try {
+    const campaniaGuardada = await Campania.create({
+      campania,
+      regla, 
+      categoriaId,
+      usuarioId,
+      consulta: ''
+    })
+
+      const { id } =  campaniaGuardada
+      res.redirect(`/campanias/agregar-sql/${id}`)
+
+  } catch (error) {
+      console.log(error)
+  }
+  */
 }
 
 // ! ------
@@ -323,5 +386,6 @@ export {
   guardarCambios,
   eliminar,
   mostrarCampania,
+  enviarSms,
   campania
 }

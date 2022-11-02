@@ -1,6 +1,6 @@
 import express from 'express';
 import { body } from 'express-validator';
-import { admin, crear, guardar, agregarSql, almacenarSql, editar, guardarCambios, eliminar, mostrarCampania } from '../controllers/campaniaController.js';
+import { admin, crear, guardar, agregarSql, almacenarSql, editar, guardarCambios, eliminar, mostrarCampania, enviarSms } from '../controllers/campaniaController.js';
 import protegerRuta from '../middleware/protegerRuta.js';
 import upload from '../middleware/subirConsulta.js';
 import identificarUsuario from '../middleware/identificarUsuario.js';
@@ -67,10 +67,16 @@ router.post('/campanias/eliminar/:id',
 // View campaign GET
 router.get('/campania/:id', 
   protegerRuta,
-  //identificarUsuario,
   mostrarCampania
 )
 
-
+// View campaign POST
+router.post('/campania/:id', 
+  protegerRuta,
+  // Validation
+  body('mensaje').notEmpty().withMessage('No se ha definido ningún mensaje para la campaña').isLength({ max: 160 }).withMessage('El mensaje supera los 160 caracteres'),
+  body('url').notEmpty().withMessage('Falta el parámetro de URL obligatorio'),
+  enviarSms
+)
 
 export default router;
