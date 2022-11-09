@@ -1,8 +1,6 @@
-import Swal from 'sweetalert2'
 import { unlink } from 'node:fs/promises';
 import { validationResult } from 'express-validator';
 import { Categoria, Campania } from "../models/index.js";
-
 
 
 // Admin
@@ -289,7 +287,7 @@ const mostrarCampania = async (req, res) => {
 
   console.log(req.usuario)
   
-  // Validacion de propiedad existente
+  // Validacion de campaña existente
   const campaign = await Campania.findByPk(id, {
       include: [
           { model: Categoria, as: 'Categoria' }
@@ -312,57 +310,58 @@ const mostrarCampania = async (req, res) => {
 const enviarSms = async (req, res, next) => {
   
   const { id } = req.params
-  console.log(id)
+  
+  // Validacion de campaña existente
+  const campaign = await Campania.findByPk(id, {
+    include: [
+        { model: Categoria, as: 'Categoria' }
+    ]
+  })
+
+  if(!campaign) {
+    return res.redirect('/404')
+  }
 
   // Validation
   let resultado = validationResult(req)
   
   if (!resultado.isEmpty()) {
-
-    const campaign = await Campania.findByPk(id, {
-      include: [
-          { model: Categoria, as: 'Categoria' }
-      ]
-    })
     
     return res.render('campanias/mostrar', {
       campaign,
-      pagina: 'Envío de campaña: ' + campaign.campania,
+      pagina: `Envío de campaña: ${campaign.campania}`,
       usuario: req.usuario,
       errores: resultado.array(),
       datos: req.body
     })
-  }
-  
+  } 
   // Send
-  //const { campania, regla, categoria: categoriaId } = req.body
+  const { mensaje, url } = req.body
+  const { id : usuarioId } = req.usuario
 
-  //const { id : usuarioId } = req.usuario
-  /*
-  Swal.fire({
-    title: 'Error!',
-    text: 'Do you want to continue',
-    icon: 'error',
-    confirmButtonText: 'Cool'
+  return res.render('campanias/envio', {
+    campaign,
+    pagina: `Envío de campaña: ${campaign.campania}`,
+    usuario: req.usuario,
+    errores: resultado.array(),
+    datos: req.body
+  //const result = true
+  //console.log('BODY ', req.body, 'USER ', req.usuario, 'PARAMS ', req.params)
   })
-  */
-  console.log(req.body, req.usuario)
+
+  
+
+
+  
+  
 
   /*
   try {
-    const campaniaGuardada = await Campania.create({
-      campania,
-      regla, 
-      categoriaId,
-      usuarioId,
-      consulta: ''
-    })
-
-      const { id } =  campaniaGuardada
-      res.redirect(`/campanias/agregar-sql/${id}`)
+    
+    
 
   } catch (error) {
-      console.log(error)
+    console.log(error)
   }
   */
 }

@@ -1,0 +1,19 @@
+extends ../layout/app
+
+block contenido
+
+  //- pre= JSON.stringify(campaign, undefined, 2)
+
+  div(class='py-5')
+    h1(class="text-4xl my-3 font-extrabold text-center")= pagina
+
+    div 
+      a(href="#" class="font-bold text-gray-600 text-5m") Categoria: 
+        span(class="font-normal")= campaign.Categoria.nombre
+
+
+
+block scripts
+  script(src="/js/apiMasiv.js")
+  //script(src="/js/sendAlert.js")
+  //script(src="/js/test.js")

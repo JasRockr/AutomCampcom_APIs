@@ -3,7 +3,7 @@ import { body } from 'express-validator';
 import { admin, crear, guardar, agregarSql, almacenarSql, editar, guardarCambios, eliminar, mostrarCampania, enviarSms } from '../controllers/campaniaController.js';
 import protegerRuta from '../middleware/protegerRuta.js';
 import upload from '../middleware/subirConsulta.js';
-import identificarUsuario from '../middleware/identificarUsuario.js';
+
 
 const router = express.Router();
 
@@ -75,8 +75,9 @@ router.post('/campania/:id',
   protegerRuta,
   // Validation
   body('mensaje').notEmpty().withMessage('No se ha definido ningún mensaje para la campaña').isLength({ max: 160 }).withMessage('El mensaje supera los 160 caracteres'),
-  body('url').notEmpty().withMessage('Falta el parámetro de URL obligatorio'),
+  body('url').notEmpty().withMessage('Falta el parámetro de URL obligatorio').isURL().withMessage('No parece una URL valida'),
   enviarSms
 )
+
 
 export default router;
